@@ -10,22 +10,15 @@ final class EventBus implements EventBusInterface
 
     private $router;
 
-    /**
-     * @var callable[]
-     */
-    private $listeners = [];
-
     private function __construct(
-        EventRouterInterface $router,
-        array $listeners
+        EventRouterInterface $router
     ) {
         $this->router = $router;
-        $this->listeners = $listeners;
     }
 
     public function fireEvent(EventInterface $event): void
     {
-        $transport = $this->router->route($event)($this->listeners);
+        $transport = $this->router->route($event);
         
         $transport->dispatch($event);
     }
@@ -35,8 +28,7 @@ final class EventBus implements EventBusInterface
         array $routes = []
     ): EventBusInterface {
         return new static(
-            new Router\EventRouter($routes),
-            $listeners
+            new Router\EventRouter($routes, $listeners)
         );
     }
 }

@@ -30,9 +30,9 @@ class MyEvent implements MyEventInterface
 }
 
 $listeners = [
-    MyEventInterface::class => function (MyEventInterface $event): void {
+    MyEventInterface::class => [function (MyEventInterface $event): void {
         var_dump($event->getFirstname());
-    }
+    }]
 ];
 
 $bus = \Usox\EventBus\EventBus::init($listeners);

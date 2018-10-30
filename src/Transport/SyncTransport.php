@@ -19,10 +19,18 @@ final class SyncTransport implements TransportInterface
     public function dispatch(EventInterface $event): void
     {
         $interfaces = class_implements($event);
-        
+
         foreach ($interfaces as $interface_name) {
             if (array_key_exists($interface_name, $this->listeners)) {
-                call_user_func($this->listeners[$interface_name], $event);
+                $listeners = $this->listeners[$interface_name];
+
+                if (!is_array($listeners)) {
+                    $listeners = [$listeners];
+                }
+
+                foreach ($listeners as $listener) {
+                   $listener($event);
+                }
             }
         }
     }

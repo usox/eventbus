@@ -13,14 +13,21 @@ final class EventRouter implements EventRouterInterface
      * @var EventRouterInterface[]
      */
     private $routes;
-    
+
+    /**
+     * @var callable[][]
+     */
+    private $listeners;
+
     public function __construct(
-        array $routes
+        array $routes,
+        array $listeners
     ) {
         $this->routes = $routes;
+        $this->listeners = $listeners;
     }
 
-    public function route(EventInterface $event): callable
+    public function route(EventInterface $event): TransportInterface 
     {
         $interfaces = class_implements($event);
         $routes = $this->getMap();
@@ -33,7 +40,7 @@ final class EventRouter implements EventRouterInterface
             }
         }
         
-        return $transport;
+        return $transport($this->listeners);
     }
 
     /**
