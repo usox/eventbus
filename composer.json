@@ -1,0 +1,27 @@
+{
+    "name": "usox/eventbus",
+    "type": "library",
+    "description": "",
+    "keywords": [],
+    "license": "MIT",
+    "homepage": "https://github.com/usox/eventbus",
+    "authors": [
+        {
+            "name": "Daniel Jakob",
+            "email": "dev@usox.org",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    },
+    "require-dev": {
+		"mockery/mockery": "^1",
+		"phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Usox\\EventBus\\": "src/"
+        }
+    }
+}
